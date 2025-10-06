@@ -40,7 +40,7 @@ A modern, responsive weather application featuring glassmorphism design, dynamic
 
 ## 🚀 Demo
 
-Experience the live demo: [Weather App Live]([https://your-demo-link.com](https://nimbus-net.vercel.app/])
+Experience the live demo: [Weather App Live]([https://nimbus-net.vercel.app/])
 
 ## 📋 Prerequisites
 
