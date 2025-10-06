@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Priyanshu** - [GitHub Profile](https://github.com/priyanshu-creates)
 
-Project Link: [https://github.com/priyanshu-creates/Weather-App](https://github.com/priyanshu-creates/Weather-App)
+Project Link: [https://github.com/priyanshu-creates/Weather-App](https://github.com/priyanshu-creates/nimbus-)
 
 ---
 
