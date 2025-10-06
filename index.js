@@ -1,4 +1,3 @@
-
 const userContainer = document.querySelector(".weather-container");
 
 const grantAccessContainer = document.querySelector(".grant-location-container");
@@ -6,17 +5,7 @@ const searchForm = document.querySelector("[data-searchForm]");
 const loadingScreen = document.querySelector(".loading-container");
 const userInfoContainer = document.querySelector(".user-info-container");
 const settingsContainer = document.querySelector(".settings-container");
-const forecastContainer = document.querySelector(".forecast-container"); 
-
-
-console.log("DOM Elements:");
-console.log("userContainer:", userContainer);
-console.log("grantAccessContainer:", grantAccessContainer);
-console.log("searchForm:", searchForm);
-console.log("loadingScreen:", loadingScreen);
-console.log("userInfoContainer:", userInfoContainer);
-console.log("settingsContainer:", settingsContainer);
-console.log("forecastContainer:", forecastContainer);
+const forecastContainer = document.querySelector(".forecast-container");
 
 
 const weatherParticles = document.getElementById('weatherParticles');
@@ -25,13 +14,6 @@ const getStartedBtn = document.getElementById('getStartedBtn');
 
 
 const searchInput = document.querySelector("[data-searchInput]");
-console.log("searchInput:", searchInput);
-
-
-console.log("Dynamic Elements:");
-console.log("weatherParticles:", weatherParticles);
-console.log("landingPage:", landingPage);
-console.log("getStartedBtn:", getStartedBtn);
 
 
 let currentView = 'home'; 
@@ -51,7 +33,6 @@ function switchView(newView) {
     currentView = newView;
     
     if(newView === 'search') {
-        
         userInfoContainer.classList.remove("active");
         grantAccessContainer.classList.remove("active");
         settingsContainer.classList.remove("active");
@@ -62,14 +43,12 @@ function switchView(newView) {
             setTimeout(() => searchInput.focus(), 100);
         }
     } else if(newView === 'home') {
-        
         searchForm.classList.remove("active");
         settingsContainer.classList.remove("active");
         forecastContainer.classList.remove("active"); 
         
         getfromSessionStorage();
     } else if(newView === 'settings') {
-        
         searchForm.classList.remove("active");
         userInfoContainer.classList.remove("active");
         grantAccessContainer.classList.remove("active");
@@ -84,7 +63,6 @@ function switchView(newView) {
 function getfromSessionStorage() {
     const localCoordinates = sessionStorage.getItem("user-coordinates");
     if(!localCoordinates) {
-        
         grantAccessContainer.classList.add("active");
     }
     else {
@@ -103,23 +81,15 @@ async function fetchUserWeatherInfo(coordinates) {
 
     
     try {
-        console.log("Fetching current weather for coordinates:", lat, lon);
-        
         const currentResponse = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
         );
-        console.log("Current weather response status:", currentResponse.status);
         const currentData = await currentResponse.json();
-        console.log("Current weather data:", currentData);
 
-        console.log("Fetching forecast for coordinates:", lat, lon);
-        
         const forecastResponse = await fetch(
             `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
         );
-        console.log("Forecast response status:", forecastResponse.status);
         const forecastData = await forecastResponse.json();
-        console.log("Forecast data:", forecastData);
 
         loadingScreen.classList.remove("active");
         userInfoContainer.classList.add("active");
@@ -128,7 +98,6 @@ async function fetchUserWeatherInfo(coordinates) {
         renderForecastInfo(forecastData); 
     }
     catch(err) {
-        console.error("Error fetching weather data:", err);
         loadingScreen.classList.remove("active");
         
         userInfoContainer.classList.add("active");
@@ -151,7 +120,6 @@ function renderWeatherInfo(weatherInfo) {
     const humidity = document.querySelector("[data-humidity]");
     const cloudiness = document.querySelector("[data-cloudiness]");
 
-    console.log(weatherInfo);
 
     
     sessionStorage.setItem('lastWeatherData', JSON.stringify(weatherInfo));
@@ -159,7 +127,7 @@ function renderWeatherInfo(weatherInfo) {
 
     
     cityName.innerText = weatherInfo?.name;
-    countryIcon.src = `https://flagcdn.com/16x12/${weatherInfo?.sys?.country.toLowerCase()}.png`;//flagcdn.com/16x12/${weatherInfo?.sys?.country.toLowerCase()}.png`;
+    countryIcon.src = `https://flagcdn.com/16x12/${weatherInfo?.sys?.country.toLowerCase()}.png`;
     desc.innerText = weatherInfo?.weather?.[0]?.description;
     
     
@@ -168,22 +136,11 @@ function renderWeatherInfo(weatherInfo) {
     
     
     const weatherIcons = {
-        
-        'clear': '<path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM21 11h-3c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1zM6 12c0-.55-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1zM6.76 4.84l-1.8-1.79c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.79 1.8c.39.39 1.02.39 1.41 0 .39-.39.39-1.03.01-1.42zM17.66 6.05c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.8 1.8c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.79-1.8zM12 22c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM6.05 17.66c-.39.39-1.02.39-1.41 0-.39-.39-.39-1.02 0-1.41l1.8-1.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-1.8 1.79zM19.42 17.66l-1.8-1.79c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l1.8 1.79c.39.39.39 1.02 0 1.41-.39.39-1.03.39-1.41 0zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>',
-        
-        
+        'clear': '<path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM21 11h-3c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1zM6 12c0-.55-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1zM6.76 4.84l-1.8-1.79c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.79 1.8c.39.39 1.02.39 1.41 0 .39-.39.39-1.03.01-1.42zM17.66 6.05c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.79 1.8c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.79-1.8zM12 22c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM6.05 17.66c-.39.39-1.02.39-1.41 0-.39-.39-.39-1.02 0-1.41l1.8-1.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-1.8 1.79zM19.42 17.66l-1.8-1.79c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l1.8 1.79c.39.39.39 1.02 0 1.41-.39.39-1.03.39-1.41 0zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>',
         'clouds': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96z"/>',
-        
-        
         'rain': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM7 16l1.5 3L10 16H7zm3.5 0l1.5 3L13.5 16h-3zm3.5 0l1.5 3L17 16h-3z"/>',
-        
-        
         'thunderstorm': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM13 18l-4-5h3l-2-4 4 5h-3l2 4z"/>',
-        
-        
         'snow': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM8 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4-2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>',
-        
-        
         'mist': '<path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>',
         'fog': '<path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>',
         'haze': '<path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>'
@@ -281,16 +238,12 @@ function renderWeatherInfo(weatherInfo) {
 
 
 function renderForecastInfo(forecastData) {
-    console.log("Rendering forecast data:", forecastData);
-    
     const forecastCardsContainer = document.querySelector('[data-forecast-cards]');
-    console.log("forecastCardsContainer:", forecastCardsContainer);
     
     
     sessionStorage.setItem('lastForecastData', JSON.stringify(forecastData));
     
     if (!forecastData || !forecastData.list) {
-        console.log("No forecast data available");
         if (forecastCardsContainer) {
             forecastCardsContainer.innerHTML = '<p class="error-message">Forecast currently unavailable. Please try again later.</p>';
         }
@@ -299,7 +252,6 @@ function renderForecastInfo(forecastData) {
     
     
     const dailyForecasts = processForecastData(forecastData.list);
-    console.log("Daily forecasts:", dailyForecasts);
     
     
     let forecastHTML = '';
@@ -347,7 +299,6 @@ function renderForecastInfo(forecastData) {
 
 
 function processForecastData(forecastList) {
-    console.log("Processing forecast list:", forecastList);
     const dailyData = {};
     
     forecastList.forEach(item => {
@@ -371,33 +322,19 @@ function processForecastData(forecastList) {
         }
     });
     
-    console.log("Daily data object:", dailyData);
-    
     
     const dailyForecasts = Object.values(dailyData);
-    console.log("Daily forecasts array:", dailyForecasts);
     return dailyForecasts.slice(0, 5);
 }
 
 
 function getWeatherIconPath(condition) {
     const weatherIcons = {
-        
         'clear': '<path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM21 11h-3c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1zM6 12c0-.55-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1zM6.76 4.84l-1.8-1.79c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.79 1.8c.39.39 1.02.39 1.41 0 .39-.39.39-1.03.01-1.42zM17.66 6.05c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.79 1.8c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.79-1.8zM12 22c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM6.05 17.66c-.39.39-1.02.39-1.41 0-.39-.39-.39-1.02 0-1.41l1.8-1.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-1.8 1.79zM19.42 17.66l-1.8-1.79c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l1.8 1.79c.39.39.39 1.02 0 1.41-.39.39-1.03.39-1.41 0zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>',
-        
-        
         'clouds': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96z"/>',
-        
-        
         'rain': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM7 16l1.5 3L10 16H7zm3.5 0l1.5 3L13.5 16h-3zm3.5 0l1.5 3L17 16h-3z"/>',
-        
-        
         'thunderstorm': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM13 18l-4-5h3l-2-4 4 5h-3l2 4z"/>',
-        
-        
         'snow': '<path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM8 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4-2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>',
-        
-        
         'mist': '<path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>',
         'fog': '<path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>',
         'haze': '<path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>'
@@ -429,8 +366,6 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
     }
     else {
-        
-        console.error("Geolocation is not supported by this browser.");
     }
 }
 
@@ -449,8 +384,6 @@ function showPosition(position) {
 const grantAccessButton = document.querySelector("[data-grantAccess]");
 if (grantAccessButton) {
     grantAccessButton.addEventListener("click", getLocation);
-} else {
-    console.warn("Grant access button not found in the DOM.");
 }
 
 
@@ -488,8 +421,6 @@ if (themeToggle) {
         const isLight = root.classList.contains('light-mode');
         localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
-} else {
-    console.warn("Theme toggle button not found in the DOM.");
 }
 
 
@@ -532,15 +463,12 @@ if (searchForm && searchInput) {
     searchForm.addEventListener("submit", (e) => {
         e.preventDefault();
         let cityName = searchInput.value;
-        console.log("Search submitted for city:", cityName);
 
         if(cityName === "")
             return;
         else 
             fetchSearchWeatherInfo(cityName);
     });
-} else {
-    console.warn("Search form or input not found in the DOM.");
 }
 
 async function fetchSearchWeatherInfo(city) {
@@ -550,23 +478,15 @@ async function fetchSearchWeatherInfo(city) {
     grantAccessContainer.classList.remove("active");
 
     try {
-        console.log("Fetching current weather for city:", city);
-        
         const currentResponse = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
         );
-        console.log("Current weather response status:", currentResponse.status);
         const currentData = await currentResponse.json();
-        console.log("Current weather data:", currentData);
 
-        console.log("Fetching forecast for city:", city);
-        
         const forecastResponse = await fetch(
             `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
         );
-        console.log("Forecast response status:", forecastResponse.status);
         const forecastData = await forecastResponse.json();
-        console.log("Forecast data:", forecastData);
 
         loadingScreen.classList.remove("active");
         userInfoContainer.classList.add("active");
@@ -575,7 +495,6 @@ async function fetchSearchWeatherInfo(city) {
         renderForecastInfo(forecastData); 
     }
     catch(err) {
-        console.error("Error fetching weather data:", err);
         loadingScreen.classList.remove("active");
         
         userInfoContainer.classList.add("active");
@@ -671,7 +590,6 @@ function animateProgressBar(element, percentage) {
 
 
 function initializeLandingPage() {
-    // Re-select the elements to ensure they exist
     const landingPage = document.getElementById('landingPage');
     const getStartedBtn = document.getElementById('getStartedBtn');
     
@@ -682,15 +600,11 @@ function initializeLandingPage() {
         return;
     }
     
-    // Ensure the button exists before adding event listener
     if (getStartedBtn && landingPage) {
-        // Remove any existing event listeners to prevent duplicates
         const newGetStartedBtn = getStartedBtn.cloneNode(true);
         getStartedBtn.parentNode.replaceChild(newGetStartedBtn, getStartedBtn);
         
-        // Add the event listener
         newGetStartedBtn.addEventListener('click', () => {
-            // Add click ripple effect
             const rect = newGetStartedBtn.getBoundingClientRect();
             const ripple = document.createElement('div');
             ripple.className = 'ripple-effect';
@@ -703,7 +617,6 @@ function initializeLandingPage() {
                 ripple.remove();
             }, 600);
             
-            // Animate landing page exit
             landingPage.style.transform = 'translateY(-100%)';
             landingPage.style.opacity = '0';
             
@@ -712,16 +625,12 @@ function initializeLandingPage() {
                 landingPage.style.transform = '';
                 landingPage.style.opacity = '';
                 
-                // Mark as visited and start main app
                 localStorage.setItem('hasVisited', 'true');
-                // Update the global variable
                 window.isLandingShown = false;
                 getfromSessionStorage();
             }, 800);
         });
     } else {
-        console.error("Get Started button or landing page not found in the DOM");
-        // Fallback: if button not found, hide landing page and show main content
         if (landingPage) {
             landingPage.classList.add('hidden');
         }
@@ -730,20 +639,15 @@ function initializeLandingPage() {
     }
 }
 
-// Ensure the DOM is fully loaded before initializing
 document.addEventListener('DOMContentLoaded', function() {
-    // Re-select the button in case there were timing issues
     const getStartedBtn = document.getElementById('getStartedBtn');
     const landingPage = document.getElementById('landingPage');
     
     if (getStartedBtn && landingPage) {
-        // Remove any existing event listeners to prevent duplicates
         const newGetStartedBtn = getStartedBtn.cloneNode(true);
         getStartedBtn.parentNode.replaceChild(newGetStartedBtn, getStartedBtn);
         
-        // Add the event listener
         newGetStartedBtn.addEventListener('click', () => {
-            // Add click ripple effect
             const rect = newGetStartedBtn.getBoundingClientRect();
             const ripple = document.createElement('div');
             ripple.className = 'ripple-effect';
@@ -756,7 +660,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 ripple.remove();
             }, 600);
             
-            // Animate landing page exit
             landingPage.style.transform = 'translateY(-100%)';
             landingPage.style.opacity = '0';
             
@@ -765,9 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 landingPage.style.transform = '';
                 landingPage.style.opacity = '';
                 
-                // Mark as visited and start main app
                 localStorage.setItem('hasVisited', 'true');
-                // Update the global variable
                 isLandingShown = false;
                 getfromSessionStorage();
             }, 800);

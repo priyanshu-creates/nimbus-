@@ -2242,10 +2242,10 @@ h1 {
     height: 90px;
     padding: var(--spacing-lg);
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    gap: var(--spacing-3xl);
     position: relative;
+    width: 100%;
     
     will-change: transform;
     transform: translateZ(0);
@@ -2597,6 +2597,8 @@ h1 {
     .bottom-navigation {
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        width: 100%;
+        border-radius: 0;
     }
     
     
