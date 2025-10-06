@@ -40,7 +40,7 @@ A modern, responsive weather application featuring glassmorphism design, dynamic
 
 ## 🚀 Demo
 
-Experience the live demo: [Weather App Live](https://your-demo-link.com)
+Experience the live demo: https://nimbus-net.vercel.app/
 
 ## 📋 Prerequisites
 
@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Priyanshu** - [GitHub Profile](https://github.com/priyanshu-creates)
 
-Project Link: [https://github.com/priyanshu-creates/Weather-App](https://github.com/priyanshu-creates/Weather-App)
+Project Link: [https://github.com/priyanshu-creates/Weather-App](https://github.com/priyanshu-creates/nimbus-)
 
 ---
 
